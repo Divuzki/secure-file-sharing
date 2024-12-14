@@ -152,7 +152,6 @@ SecureFileSharing/
 
 ## Author
 **Your Name**  
-*LinkedIn*: [Your Profile](https://www.linkedin.com/in/your-profile)  
-*GitHub*: [Your GitHub](https://github.com/yourusername)
+*LinkedIn*: (https://www.linkedin.com/in/kavindu-liyanage/)  
 
 
