@@ -1,49 +1,41 @@
-Secure File Sharing and Monitoring System
+# Secure File Sharing and Monitoring System
 
-Overview
+## Overview
+The **Secure File Sharing and Monitoring System** is a Python-based project designed to provide a secure platform for uploading, storing, and downloading files with encryption and decryption capabilities. This project demonstrates the use of **AES symmetric encryption** to ensure file confidentiality, integrity, and security. Additionally, it supports user authentication and role-based access control to manage file operations.
 
-The Secure File Sharing and Monitoring System is a Python-based project designed to provide a secure platform for uploading, storing, and downloading files with encryption and decryption capabilities. This project demonstrates the use of AES symmetric encryption to ensure file confidentiality, integrity, and security. Additionally, it supports user authentication and role-based access control to manage file operations.
+---
 
-Features
+## Features
 
-Core Functionalities
+### Core Functionalities
+- **File Encryption and Upload**:
+  - Encrypts files using AES (via the `cryptography` library).
+  - Stores encrypted files in a secure `uploads` directory.
 
-File Encryption and Upload:
+- **Decrypted File Download**:
+  - Decrypts files on-the-fly and serves them as plaintext to authorized users.
 
-Encrypts files using AES (via the cryptography library).
+- **Encrypted File Download**:
+  - Allows users to download the raw encrypted file for secure sharing.
 
-Stores encrypted files in a secure uploads directory.
+- **User Authentication**:
+  - Supports user registration, login, and logout using `Flask-Login`.
 
-Decrypted File Download:
+- **Dashboard Interface**:
+  - A clean and user-friendly dashboard where users can upload files, view files, and download both encrypted and decrypted versions.
 
-Decrypts files on-the-fly and serves them as plaintext to authorized users.
+---
 
-Encrypted File Download:
+## Technical Details
 
-Allows users to download the raw encrypted file for secure sharing.
+### Encryption and Decryption
+The project uses **Fernet encryption** from the `cryptography` library, which provides:
+- AES encryption in CBC mode with PKCS7 padding.
+- A secure HMAC for data integrity validation.
+- Randomized initialization vectors (IVs) for every encryption process.
 
-User Authentication:
-
-Supports user registration, login, and logout using Flask-Login.
-
-Dashboard Interface:
-
-A clean and user-friendly dashboard where users can upload files, view files, and download both encrypted and decrypted versions.
-
-Technical Details
-
-Encryption and Decryption
-
-The project uses Fernet encryption from the cryptography library, which provides:
-
-AES encryption in CBC mode with PKCS7 padding.
-
-A secure HMAC for data integrity validation.
-
-Randomized initialization vectors (IVs) for every encryption process.
-
-Code for Encryption:
-
+#### Code for Encryption:
+```python
 from cryptography.fernet import Fernet
 
 key = Fernet.generate_key()
@@ -53,36 +45,34 @@ def encrypt_file(data, filepath):
     encrypted_data = cipher.encrypt(data)
     with open(filepath, 'wb') as file:
         file.write(encrypted_data)
+```
 
-Code for Decryption:
-
+#### Code for Decryption:
+```python
 def decrypt_file(filepath):
     with open(filepath, 'rb') as file:
         encrypted_data = file.read()
     return cipher.decrypt(encrypted_data)
+```
 
-Flask Application Structure
-
+### Flask Application Structure
 This project uses Flask to provide a RESTful API and a simple front-end dashboard.
 
-Key Components:
+#### Key Components:
+- **`main.py`**:
+  - Handles routes for user authentication, file upload, and file downloads.
 
-main.py:
+- **Templates**:
+  - HTML files (`index.html` and `dashboard.html`) for the front-end.
 
-Handles routes for user authentication, file upload, and file downloads.
+- **Static Files**:
+  - CSS (`styles.css`) for styling the interface.
+  - JavaScript (`scripts.js`) for adding interactivity.
 
-Templates:
+---
 
-HTML files (index.html and dashboard.html) for the front-end.
-
-Static Files:
-
-CSS (styles.css) for styling the interface.
-
-JavaScript (scripts.js) for adding interactivity.
-
-Folder Structure
-
+## Folder Structure
+```
 SecureFileSharing/
 │
 ├── main.py               # Main Flask application
@@ -98,97 +88,99 @@ SecureFileSharing/
 │   ├── scripts.js        # Optional JavaScript interactivity
 ├── requirements.txt      # Python dependencies
 └── README.md             # Documentation
+```
 
-Setup Instructions
+---
 
-Prerequisites
+## Setup Instructions
 
-Python 3.9 or higher
+### Prerequisites
+- Python 3.9 or higher
+- Pip (Python package manager)
 
-Pip (Python package manager)
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/secure-file-sharing.git
+   cd secure-file-sharing
+   ```
 
-Installation
+2. Create and activate a virtual environment:
+   ```bash
+   python -m venv env
+   source env/bin/activate   # On Windows: env\Scripts\activate
+   ```
 
-Clone the repository:
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-git clone https://github.com/yourusername/secure-file-sharing.git
-cd secure-file-sharing
+4. Run the application:
+   ```bash
+   python main.py
+   ```
 
-Create and activate a virtual environment:
+5. Access the app at [http://127.0.0.1:5000](http://127.0.0.1:5000).
 
-python -m venv env
-source env/bin/activate   # On Windows: env\Scripts\activate
+---
 
-Install dependencies:
+## Usage
 
-pip install -r requirements.txt
+### Upload Files
+1. Log in using your credentials.
+2. Use the dashboard interface to upload files. Uploaded files are encrypted automatically.
 
-Run the application:
+### Download Files
+- **Decrypted File**: Click the "Download Decrypted" button to download the plaintext version.
+- **Encrypted File**: Click the "Download Encrypted" button to download the raw encrypted file.
 
-python main.py
+### Authentication
+- Register a new user account.
+- Login to access the dashboard and manage files.
+- Logout to securely end the session.
 
-Access the app at http://127.0.0.1:5000.
+---
 
-Usage
+## Technical Highlights
+- **AES Encryption**: Secures files with industry-standard cryptographic algorithms.
+- **Flask-Login**: Simplifies user authentication and session management.
+- **Responsive UI**: Provides a clean and intuitive dashboard using HTML/CSS.
+- **Secure Key Management**: Uses a generated Fernet key for encryption.
 
-Upload Files
+---
 
-Log in using your credentials.
+## Future Enhancements
+- **Role-Based Access Control**: Add roles like "Admin" and "User" for advanced permissions.
+- **Cloud Integration**: Integrate with AWS S3 or Azure Blob Storage for scalable file storage.
+- **Audit Logging**: Implement detailed logs for user actions and file activity.
+- **Enhanced Key Management**: Use secure key storage solutions like AWS Secrets Manager or HashiCorp Vault.
 
-Use the dashboard interface to upload files. Uploaded files are encrypted automatically.
+---
 
-Download Files
+## SEO Optimized Keywords
+- Secure file sharing
+- AES encryption Python
+- Flask file upload example
+- Python file encryption project
+- Encrypted file sharing application
+- Flask dashboard example
 
-Decrypted File: Click the "Download Decrypted" button to download the plaintext version.
+---
 
-Encrypted File: Click the "Download Encrypted" button to download the raw encrypted file.
+## License
+This project is licensed under the [MIT License](LICENSE).
 
-Authentication
+---
 
-Register a new user account.
-
-Login to access the dashboard and manage files.
-
-Logout to securely end the session.
-
-Technical Highlights
-
-AES Encryption: Secures files with industry-standard cryptographic algorithms.
-
-Flask-Login: Simplifies user authentication and session management.
-
-Responsive UI: Provides a clean and intuitive dashboard using HTML/CSS.
-
-Secure Key Management: Uses a generated Fernet key for encryption.
-
-Future Enhancements
-
-Role-Based Access Control: Add roles like "Admin" and "User" for advanced permissions.
-
-Cloud Integration: Integrate with AWS S3 or Azure Blob Storage for scalable file storage.
-
-Audit Logging: Implement detailed logs for user actions and file activity.
-
-Enhanced Key Management: Use secure key storage solutions like AWS Secrets Manager or HashiCorp Vault.
-
-SEO Optimized Keywords
-
-Secure file sharing
-
-AES encryption Python
-
-Flask file upload example
-
-Python file encryption project
-
-Encrypted file sharing application
-
-Flask dashboard example
-
-License
-
-This project is licensed under the MIT License.
-
-Contributing
-
+## Contributing
 Contributions are welcome! Please fork the repository, make changes, and submit a pull request. For major changes, open an issue first to discuss what you would like to change.
+
+---
+
+## Author
+**Your Name**  
+*LinkedIn*: [Your Profile](https://www.linkedin.com/in/your-profile)  
+*GitHub*: [Your GitHub](https://github.com/yourusername)
+
+
