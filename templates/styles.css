@@ -8,12 +8,16 @@ body {
 
 .container {
     max-width: 800px;
-    margin: 50px auto;
-    padding: 20px;
+    margin: 100px auto;
+    padding: 70px;
     background: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
     border-radius: 8px;
+}
+
+.container h2 {
+    text-align: left;
 }
 
 h1 {
@@ -58,4 +62,31 @@ h2 {
 
 .logout:hover {
     background-color: #c82333;
+}
+
+/* form styling  */
+#login-form, #register-form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 50%;
+    margin: 50px auto;
+}
+
+input{
+    margin-top: 5px;
+    margin-bottom: 10px;
+    height: 30px;
+    border-radius: 10px;
+    border: #a8a3a3 solid 1px;
+    font-size: 15px;
+    padding: 5px ;
+}
+
+button {
+    margin-top: 10px;
+    font-weight: 400;
+    font-size: 15px;
+    font-size: 15px;
+    padding: 5px ;
 }
